@@ -16,7 +16,7 @@ class EditVideoType extends AbstractType
             ->add('title')
             ->add('url')
             ->add('description')
-            ->add('submit', SubmitType::class)
+            ->add('editer', SubmitType::class)
         ;
     }
 

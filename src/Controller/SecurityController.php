@@ -8,6 +8,7 @@ use App\Form\ProfileUserType;
 use App\Form\RegisterUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,7 +20,7 @@ class SecurityController extends Controller
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, LoggerInterface $logger)
     {
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
@@ -31,6 +32,7 @@ class SecurityController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            $logger->info('New User registered now ! User : '.$user->getEmail());
             $this->addFlash( 'notice', 'You\'ve been registered succesfully!');
             return $this->redirectToRoute('home');
         }
@@ -95,8 +97,16 @@ class SecurityController extends Controller
     public function admin(UserRepository $userRepository){
 
         $users = $userRepository->findAll();
+        $userList = [];
+
+        foreach($users as $user){
+            if($user->getId() !== $this->getUser()->getId()){
+                array_push($userList, $user);
+            }
+        }
+
         return $this->render('security/admin.html.twig', [
-            'users' => $users
+            'users' => $userList
         ]);
     }
 }

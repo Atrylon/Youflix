@@ -8,26 +8,35 @@
 
 <div class="example-wrapper">
     {% if user is not null %}
-        <b>Fiche de : </b>{{ user.firstname}} {{ user.lastname }}
-        <br />
-        <b>Email : </b>{{ user.email }}
-        <br />
-        <b>Née le : </b>{{ user.birthday|date('d/m/y') }}
-        <br><br>
-        <h3>Vidéo(s) :</h3>
-        <ul>
-            {% for video in user.videos %}
-                <li>
-                    <h4>Title : {{ video.title }}</h4>
-                    <div>
-                        <b>Url : </b><a href=" https://www.youtube.com/watch?v={{ video.url }} ">https://www.youtube.com/watch?v={{ video.url }} </a><br>
-                    </div>
-                    <p>
-                        <b>Description : </b> {{ video.description }}
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="row">
+            <div class="col-md-9">
+                <h2>Fiche de : {{ user.firstname}} {{ user.lastname }}</h2>
+            </div>
+            <a href="{{ path( 'user_remove', {'id': user.id}) }} ">
+                <button type="button" class="btn btn-danger">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Supprimer l'utilisateur
+                </button>
+            </a>
+        </div>
+        {{ form_start(form) }}
+        Email : {{ form_widget(form.email) }} <br>
+        Firstname : {{ form_widget(form.firstname) }} <br>
+        Lastname : {{ form_widget(form.lastname) }} <br />
+        <div class="row col-md-12">
+            Birthday :
+            <span class="col-md-2">
+                {{  form_widget(form.birthday.day) }}
+            </span>
+            <span class="col-md-2">
+                {{  form_widget(form.birthday.month) }}
+            </span>
+            <span class="col-md-2">
+                {{  form_widget(form.birthday.year) }}
+            </span>
+        </div>
+        <br>
+        {{ form_end(form) }}
     {% else %}
         Pas d'utilisateur correspondant à cet ID.
     {% endif %}

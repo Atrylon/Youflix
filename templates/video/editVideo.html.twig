@@ -12,7 +12,7 @@
             <b>URL :</b>{{  form_widget(form.url) }}
             <b>Description :</b>{{  form_widget(form.description) }}
             <br>
-            {{  form_widget(form.submit) }}
+            {{  form_widget(form.editer) }}
 
             <a href="{{ path( 'removeVideo', {'id': video.id}) }}">
             <button type="button" class="btn btn-danger">

@@ -7,6 +7,7 @@ use App\Form\AddVideoType;
 use App\Form\EditVideoType;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,7 +17,7 @@ class VideoController extends Controller
     /**
      * @Route("/addVideo", name="addVideo")
      */
-    public function index(Request $request, VideoRepository $videoRepository)
+    public function addVideo(Request $request, VideoRepository $videoRepository, LoggerInterface $logger)
     {
         $video = new Video();
         $form = $this->createForm(AddVideoType::class, $video);
@@ -27,6 +28,7 @@ class VideoController extends Controller
             $video->setUser($this->getUser());
             $entityManager->persist($video);
             $entityManager->flush();
+            $logger->info('New video added now ! User : '.$video->getTitle());
             $this->addFlash('notice', 'Vidéo ajoutée!');
             return $this->redirectToRoute('home');
         }
@@ -69,7 +71,7 @@ class VideoController extends Controller
             $entityManager->persist($video);
             $entityManager->flush();
             $this->addFlash('notice', 'Changement(s) effectué(s)!');
-            return $this->redirectToRoute('myVideo');
+            return $this->redirectToRoute('editVideo');
         }
 
         return $this->render('video/editVideo.html.twig', [
@@ -87,5 +89,41 @@ class VideoController extends Controller
         $entityManager->flush();
         $this->addFlash('notice', 'Vidéo supprimée!');
         return $this->redirectToRoute('myVideo');
+    }
+
+    /**
+     * @Route("/listVideo", name="listVideo")
+     */
+    public function listVideoAll(VideoRepository $videoRepository){
+
+        $videos = $videoRepository->findAll();
+
+        foreach ($videos as $video){
+            $embed = explode('=', $video->getUrl());
+            $video->setUrl($embed[1]);
+        }
+
+        return $this->render('video/listVideo.html.twig', [
+                'videos' => $videos,
+        ]);
+    }
+
+    /**
+     * @Route("/listVideoByUser/{id}", name="listVideoByUser")
+     */
+    public function listVideoByUser(VideoRepository $videoRepository, int $id){
+
+        $videos = $videoRepository->findBy(
+            ['user' => $id]
+        );
+
+        foreach ($videos as $video){
+            $embed = explode('=', $video->getUrl());
+            $video->setUrl($embed[1]);
+        }
+
+        return $this->render('video/listVideo.html.twig', [
+            'videos' => $videos,
+        ]);
     }
 }

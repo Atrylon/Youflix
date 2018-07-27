@@ -35,7 +35,8 @@ class Video
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="videos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="videos", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)s
      */
     private $user;
 

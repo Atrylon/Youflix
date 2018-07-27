@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <h1 class="text-center">Videos List</h1>
+
+    <div class="row">
+        {% for video in videos %}
+            <div class="col-md-4">
+                <div class="card bg-light text-dark" style="padding:15px;height:auto;width:auto;margin: 10px 10px 15px 10px;">
+                    <ul>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <b>Title :</b> {{ video.title }}
+                            </div>
+                            <div>
+                                <a href="{{ path( 'editVideo', {'id': video.id}) }}">  <i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                                <a href="{{ path( 'removeVideo', {'id': video.id}) }}">  <i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <b>Url : </b><a href=" https://www.youtube.com/watch?v={{ video.url }} ">https://www.youtube.com/watch?v={{ video.url }} </a><br>
+                        <b>Description :</b> {{ video.description }} <br>
+                        <span>
+                        <iframe src=" https://www.youtube.com/embed/{{ video.url }}?showinfo=0    " frameborder="0"
+                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </span>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

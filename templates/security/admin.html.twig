@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h1 class="text-center">Page d'administration</h1>
+    <h1 class="text-center">Users List</h1>
 
     <br>
     <div class="row">
@@ -23,9 +23,15 @@
                             {% endfor %}
                         {% endif %}
                         <a href="{{ path('user_id', {'id':user.id}) }}">
+                            <button type="button" class="btn btn-success">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                Modifier le profil
+                            </button>
+                        </a>
+                        <a href="{{ path('listVideoByUser', {'id':user.id}) }}">
                             <button type="button" class="btn btn-info">
-                                <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                Voir plus
+                                <i class="fa fa-film" aria-hidden="true"></i>
+                                Voir les vidéos
                             </button>
                         </a>
                     </ul>
