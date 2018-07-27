@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="row">
+    <div class="col-md-4 offset-4 ">
+    <h1>Ajouter une vidéo</h1>
+    {{ form_start(formVideo) }}
+    {{  form_widget(formVideo) }}
+    {{ form_end(formVideo) }}
+    </div>
+</div>
+
+{% endblock %}

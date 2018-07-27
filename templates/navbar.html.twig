@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/" v style="width:5%;">
+            <img src="/img/youflix.png"  style="width:100%;"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="nav-item">
+                <a class="nav-link" href="/article">My videos</a>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/game">User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin">Admin</a>
+                </li>
+            {% endif %}
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/addVideo">
+                    <i class="fa fa-plus-square fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="/profile"> {{ app.user.firstname }}'s profile</a>
+            </li>
+            <li class="nav-item float-md-right">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {% else %}
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/register">Register<span class="sr-only">)</span></a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
