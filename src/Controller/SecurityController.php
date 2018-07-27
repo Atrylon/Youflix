@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\LoginType;
 use App\Form\ProfileUserType;
 use App\Form\RegisterUserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,6 +77,26 @@ class SecurityController extends Controller
 
         return $this->render('security/profile.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout(){
+
+        return $this->render('home/index.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin(UserRepository $userRepository){
+
+        $users = $userRepository->findAll();
+        return $this->render('security/admin.html.twig', [
+            'users' => $users
         ]);
     }
 }

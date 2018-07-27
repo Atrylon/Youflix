@@ -3,10 +3,12 @@
 
 {% block body %}
 
+<h1 class="text-center">My Videos</h1>
+
 <div class="row">
     {% for video in videos %}
         <div class="col-md-4">
-            <div class="card bg-light text-dark" style="padding:15px;height:150%;width:100%;margin-bottom:15px;">
+            <div class="card bg-light text-dark" style="padding:15px;height:auto;width:auto;margin: 10px 10px 15px 10px;">
                 <ul>
                     <div class="row">
                         <div class="col-md-10">
@@ -20,7 +22,7 @@
                     <b>Url : </b><a href=" https://www.youtube.com/watch?v={{ video.url }} ">https://www.youtube.com/watch?v={{ video.url }} </a><br>
                     <b>Description :</b> {{ video.description }} <br>
                     <span>
-                        <iframe width="100%" height="140%" src=" https://www.youtube.com/embed/{{ video.url }}?showinfo=0    " frameborder="0"
+                        <iframe src=" https://www.youtube.com/embed/{{ video.url }}?showinfo=0    " frameborder="0"
                                 allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </span>
                 </ul>

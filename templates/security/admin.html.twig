@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="text-center">Page d'administration</h1>
+
+    <br>
+    <div class="row">
+        {% for user in users %}
+            <div class="col-md-4">
+                <div class="card bg-light text-dark" style="padding:15px;height:100%;margin: 10px 10px 15px 10px">
+                    <ul>
+                        Username : {{ user.email }} <br>
+                        Utilisateur : {{ user.firstname }} {{  user.lastname }} <br />
+                        Date de Naissance : {{ user.birthday|date('d/m/y') }} <br>
+                        {% if user.roles|length >0 %}
+                            {% dump user.roles|length %}
+                            Rôle :
+                            {% for role in user.roles %}
+                                {% if role %}
+                                    <ul><li>{{ role }}</li></ul>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <a href="{{ path('user_id', {'id':user.id}) }}">
+                            <button type="button" class="btn btn-info">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                Voir plus
+                            </button>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

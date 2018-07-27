@@ -9,14 +9,20 @@
         <ul class="navbar-nav mr-auto">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item">
-                <a class="nav-link" href="/myVideo">My videos</a>
+                <a class="nav-link" href="/myVideo">
+                    <i class="fa fa-youtube-play fa-lg" aria-hidden="true"></i>
+                    My videos</a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/game">User</a>
+                    <a class="nav-link" href="/game">
+                        <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i>
+                        Users list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/admin">Admin</a>
+                    <a class="nav-link " href="/admin">
+                        <i class="fa fa-desktop fa-lg" aria-hidden="true"></i>
+                        Admin</a>
                 </li>
             {% endif %}
         </ul>
@@ -28,10 +34,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="/profile"> {{ app.user.firstname }}'s profile</a>
+                <a class="nav-link " href="/profile">
+                    <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+                    {{ app.user.firstname }}'s profile</a>
             </li>
             <li class="nav-item float-md-right">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link" href="/logout">
+                    <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+                    Logout</a>
             </li>
             {% else %}
         </ul>
