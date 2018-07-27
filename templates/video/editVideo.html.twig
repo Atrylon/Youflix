@@ -5,8 +5,22 @@
     <div class="row">
         <div class="col-md-4 offset-4 ">
             <h1>Editer la vidéo</h1>
+
+
             {{ form_start(form) }}
-            {{  form_widget(form) }}
+            <b>Title :</b>{{  form_widget(form.title) }}
+            <b>URL :</b>{{  form_widget(form.url) }}
+            <b>Description :</b>{{  form_widget(form.description) }}
+            <br>
+            {{  form_widget(form.submit) }}
+
+            <a href="{{ path( 'removeVideo', {'id': video.id}) }}">
+            <button type="button" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Supprimer
+            </button>
+            </a>
+
             {{ form_end(form) }}
         </div>
     </div>

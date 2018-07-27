@@ -73,17 +73,19 @@ class VideoController extends Controller
         }
 
         return $this->render('video/editVideo.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'video' => $video,
         ]);
     }
 
     /**
-     * @Route("/video/remove/{id}", name="video_remove")
+     * @Route("/video/remove/{id}", name="removeVideo")
      */
     public function removeVideo(Video $video, EntityManagerInterface $entityManager){
 
         $entityManager->remove($video);
         $entityManager->flush();
+        $this->addFlash('notice', 'Vidéo supprimée!');
         return $this->redirectToRoute('myVideo');
     }
 }

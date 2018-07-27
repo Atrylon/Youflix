@@ -14,7 +14,7 @@
                         </div>
                         <div>
                             <a href="{{ path( 'editVideo', {'id': video.id}) }}">  <i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-                            <a href="">  <i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                            <a href="{{ path( 'removeVideo', {'id': video.id}) }}">  <i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     <b>Url : </b><a href=" https://www.youtube.com/watch?v={{ video.url }} ">https://www.youtube.com/watch?v={{ video.url }} </a><br>
