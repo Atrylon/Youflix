@@ -59,16 +59,6 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/logout", name="logout")
-     */
-    public function logout(){
-
-
-        return $this->render('home/index.html.twig', [
-        ]);
-    }
-
-    /**
      * @Route("/profile", name="profile")
      */
     public function profile(Request $request, EntityManagerInterface $entityManager){

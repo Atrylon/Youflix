@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-4 offset-4 ">
+            <h1>Editer la vidéo</h1>
+            {{ form_start(form) }}
+            {{  form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -9,7 +9,7 @@
         <ul class="navbar-nav mr-auto">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item">
-                <a class="nav-link" href="/article">My videos</a>
+                <a class="nav-link" href="/myVideo">My videos</a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
