@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Video;
+use App\Event\VideoAddedEvent;
+use App\Event\VideoDeletedEvent;
 use App\Form\AddVideoType;
 use App\Form\EditVideoType;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,7 +20,8 @@ class VideoController extends Controller
     /**
      * @Route("/addVideo", name="addVideo")
      */
-    public function addVideo(Request $request, VideoRepository $videoRepository, LoggerInterface $logger)
+    public function addVideo(Request $request, VideoRepository $videoRepository, LoggerInterface $logger,
+                             EventDispatcherInterface $eventDispatcher)
     {
         $video = new Video();
         $form = $this->createForm(AddVideoType::class, $video);
@@ -28,9 +32,10 @@ class VideoController extends Controller
             $video->setUser($this->getUser());
             $entityManager->persist($video);
             $entityManager->flush();
-            $logger->info('New video added now ! User : '.$video->getTitle());
             $this->addFlash('notice', 'Vidéo ajoutée!');
-            return $this->redirectToRoute('home');
+            $event = new VideoAddedEvent($video);
+            $eventDispatcher->dispatch(VideoAddedEvent::NAME, $event);
+            return $this->redirectToRoute('myVideo');
         }
 
         return $this->render('video/addVideo.html.twig', [
@@ -83,9 +88,12 @@ class VideoController extends Controller
     /**
      * @Route("/video/remove/{id}", name="removeVideo")
      */
-    public function removeVideo(Video $video, EntityManagerInterface $entityManager){
+    public function removeVideo(Video $video, EntityManagerInterface $entityManager, LoggerInterface $logger,
+EventDispatcherInterface $eventDispatcher){
 
         $entityManager->remove($video);
+        $event = new VideoDeletedEvent($video);
+        $eventDispatcher->dispatch(VideoDeletedEvent::NAME, $event);
         $entityManager->flush();
         $this->addFlash('notice', 'Vidéo supprimée!');
         return $this->redirectToRoute('myVideo');

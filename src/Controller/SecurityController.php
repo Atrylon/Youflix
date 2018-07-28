@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Event\UserRegisteredEvent;
 use App\Form\LoginType;
 use App\Form\ProfileUserType;
 use App\Form\RegisterUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +22,8 @@ class SecurityController extends Controller
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, LoggerInterface $logger)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, LoggerInterface $logger,
+EventDispatcherInterface $eventDispatcher)
     {
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
@@ -32,8 +35,9 @@ class SecurityController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            $logger->info('New User registered now ! User : '.$user->getEmail());
-            $this->addFlash( 'notice', 'You\'ve been registered succesfully!');
+            $this->addFlash( 'notice', 'You\'ve been registered succesfully! You can now login');
+            $event = new UserRegisteredEvent($user);
+            $eventDispatcher->dispatch(UserRegisteredEvent::NAME, $event);
             return $this->redirectToRoute('home');
         }
 
@@ -50,9 +54,10 @@ class SecurityController extends Controller
         $user = new User();
         $form = $this->createForm(LoginType::class, $user);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash( 'notice', 'You\'ve login succesfully!');
-        }
+//        if($form->isSubmitted() && $form->isValid()) {
+//            $this->addFlash( 'notice', 'You\'ve login succesfully!');
+//            return $this->redirectToRoute('home');
+//        }
 
         return $this->render('security/login.html.twig', [
             'error' => $authenticationUtils->getLastAuthenticationError(),
@@ -92,7 +97,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/listUser", name="listUser")
      */
     public function admin(UserRepository $userRepository){
 
@@ -105,7 +110,7 @@ class SecurityController extends Controller
             }
         }
 
-        return $this->render('security/admin.html.twig', [
+        return $this->render('security/listUser.html.twig', [
             'users' => $userList
         ]);
     }

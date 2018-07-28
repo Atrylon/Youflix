@@ -39,3 +39,5 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/myVideo, roles: ROLE_USER }
+        - { path: ^/addVideo, roles: ROLE_USER }

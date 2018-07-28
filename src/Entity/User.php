@@ -27,7 +27,7 @@ class User implements UserInterface
     /**
      * @Assert\Email()
      * @Assert\NotBlank()
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -53,7 +53,7 @@ class User implements UserInterface
     private $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="user", cascade={"remove"})
      */
     private $videos;
 

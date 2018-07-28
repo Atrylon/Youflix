@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Event\UserDeletedEvent;
 use App\Form\EditUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,16 +45,18 @@ EntityManagerInterface $entityManager){
     /**
      * @Route("/user/remove/{id}", name="user_remove")
      */
-    public function remove(User $user, EntityManagerInterface $entityManager, LoggerInterface $logger){
+    public function remove(User $user, EntityManagerInterface $entityManager, LoggerInterface $logger,
+EventDispatcherInterface $eventDispatcher){
 
         $videos = $user->getVideos();
         foreach($videos as $video){
             $video->setUser(null);
         }
 
-        $logger->info('New User registered now ! User : '.$user->getEmail());
+        $event = new UserDeletedEvent($user);
+        $eventDispatcher->dispatch(UserDeletedEvent::NAME, $event);
         $entityManager->remove($user);
         $entityManager->flush();
-        return $this->redirectToRoute('admin');
+        return $this->redirectToRoute('listUser');
     }
 }

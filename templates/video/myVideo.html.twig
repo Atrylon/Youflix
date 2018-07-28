@@ -29,6 +29,13 @@
             </div>
         </div>
     {% endfor %}
+    {% if not videos %}
+        <div class="col-md-8 offset-2">
+            <p>
+                Aucune vidéo trouvée.
+            </p>
+        </div>
+    {% endif %}
 </div>
 
 {% endblock %}

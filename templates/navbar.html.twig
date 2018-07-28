@@ -15,7 +15,7 @@
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="/listUser">
                         <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i>
                         Users list</a>
                 </li>
@@ -23,11 +23,6 @@
                     <a class="nav-link" href="/listVideo">
                         <i class="fa fa-film fa-lg" aria-hidden="true"></i>
                         Video list</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="/admin">
-                        <i class="fa fa-desktop fa-lg" aria-hidden="true"></i>
-                        Admin</a>
                 </li>
             {% endif %}
         </ul>
@@ -38,15 +33,20 @@
                     Add a Video
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/profile">
-                    <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
-                    {{ app.user.firstname }}'s profile</a>
-            </li>
-            <li class="nav-item float-md-right">
-                <a class="nav-link" href="/logout">
-                    <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
-                    Logout</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ app.user.email }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link " href="/profile">
+                        <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+                        Profile
+                    </a>
+                    <a class="nav-link" href="/logout">
+                        <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+                        Logout
+                    </a>
+                </div>
             </li>
             {% else %}
         </ul>
