@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+//Commande de création d'utilisateurs avec le ROLE_ADMIN
 class AppCreateAdminCommand extends Command
 {
     protected static $defaultName = 'app:create-admin';

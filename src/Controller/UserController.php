@@ -32,7 +32,7 @@ EntityManagerInterface $entityManager){
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'Changement(s) effectué(s)!');
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('listUser');
         }
 
         return $this->render('user/userFiche.html.twig', [

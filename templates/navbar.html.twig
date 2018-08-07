@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/" v style="width:5%;">
-            <img src="/img/youflix.png"  style="width:100%;"/>
+            <img src="{{ asset('/img/youflix.png') }}"  style="width:100%;"/>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,18 +9,18 @@
         <ul class="navbar-nav mr-auto">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item">
-                <a class="nav-link" href="/myVideo">
+                <a class="nav-link" href="{{ path('myVideo') }}">
                     <i class="fa fa-youtube-play fa-lg" aria-hidden="true"></i>
                     My videos</a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/listUser">
+                    <a class="nav-link" href="{{ path('listUser') }}">
                         <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i>
                         Users list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/listVideo">
+                    <a class="nav-link" href="{{ path('listVideo') }}">
                         <i class="fa fa-film fa-lg" aria-hidden="true"></i>
                         Video list</a>
                 </li>
@@ -28,7 +28,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/addVideo">
+                <a class="nav-link" href="{{ path('addVideo') }}">
                     <i class="fa fa-plus-square fa-lg"></i>
                     Add a Video
                 </a>
@@ -38,11 +38,11 @@
                     {{ app.user.email }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="nav-link " href="/profile">
+                    <a class="nav-link " href="{{ path('profile') }}">
                         <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
                         Profile
                     </a>
-                    <a class="nav-link" href="/logout">
+                    <a class="nav-link" href="{{ path('logout') }}">
                         <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
                         Logout
                     </a>
@@ -52,10 +52,10 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('login') }}">Login<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/register">Register<span class="sr-only">)</span></a>
+                <a class="nav-link" href="{{ path('register') }}">Register<span class="sr-only">)</span></a>
             </li>
             {% endif %}
         </ul>
