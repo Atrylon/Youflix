@@ -8,7 +8,6 @@
 
 namespace App\Subscriber;
 
-
 use App\Event\VideoAddedEvent;
 use App\Event\VideoDeletedEvent;
 use Psr\Log\LoggerInterface;

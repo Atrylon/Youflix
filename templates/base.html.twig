@@ -14,10 +14,10 @@
         {% include 'navbar.html.twig' %}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-success col-md-8 offset-2">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
+                    <div class="alert alert-{{ label }} col-md-8 offset-2">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
             {% endfor %}
         {% endfor %}
         {% block body %}{% endblock %}

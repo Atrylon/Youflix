@@ -20,8 +20,7 @@ class VideoController extends Controller
     /**
      * @Route("/addVideo", name="addVideo")
      */
-    public function addVideo(Request $request, VideoRepository $videoRepository, LoggerInterface $logger,
-                             EventDispatcherInterface $eventDispatcher)
+    public function addVideo(Request $request, EventDispatcherInterface $eventDispatcher)
     {
         $video = new Video();
         $form = $this->createForm(AddVideoType::class, $video);
@@ -32,7 +31,7 @@ class VideoController extends Controller
             $video->setUser($this->getUser());
             $entityManager->persist($video);
             $entityManager->flush();
-            $this->addFlash('notice', 'Vidéo ajoutée!');
+            $this->addFlash('success', 'Vidéo ajoutée!');
             $event = new VideoAddedEvent($video);
             $eventDispatcher->dispatch(VideoAddedEvent::NAME, $event);
             return $this->redirectToRoute('myVideo');
@@ -75,8 +74,8 @@ class VideoController extends Controller
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($video);
             $entityManager->flush();
-            $this->addFlash('notice', 'Changement(s) effectué(s)!');
-            return $this->redirectToRoute('editVideo');
+            $this->addFlash('success', 'Changement(s) effectué(s)!');
+            return $this->redirectToRoute('myVideo');
         }
 
         return $this->render('video/editVideo.html.twig', [
@@ -91,11 +90,11 @@ class VideoController extends Controller
     public function removeVideo(Video $video, EntityManagerInterface $entityManager, LoggerInterface $logger,
 EventDispatcherInterface $eventDispatcher){
 
-        $entityManager->remove($video);
         $event = new VideoDeletedEvent($video);
         $eventDispatcher->dispatch(VideoDeletedEvent::NAME, $event);
+        $entityManager->remove($video);
         $entityManager->flush();
-        $this->addFlash('notice', 'Vidéo supprimée!');
+        $this->addFlash('success', 'Vidéo supprimée!');
         return $this->redirectToRoute('myVideo');
     }
 

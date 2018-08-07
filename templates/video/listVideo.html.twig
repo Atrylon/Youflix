@@ -5,10 +5,11 @@
 
     <h1 class="text-center">Videos List</h1>
 
+<div class="container-fluid">
     <div class="row">
         {% for video in videos %}
-            <div class="col-md-4">
-                <div class="card bg-light text-dark" style="padding:15px;height:auto;width:auto;margin: 10px 10px 15px 10px;">
+            <div class="col-md-3 d-flex">
+                <div class="card bg-light text-dark flex-fill" style="padding:15px;margin: 10px 10px 15px 10px;">
                     <ul>
                         <div class="row">
                             <div class="col-md-10">
@@ -30,5 +31,6 @@
             </div>
         {% endfor %}
     </div>
+</div>
 
 {% endblock %}

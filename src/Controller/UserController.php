@@ -31,7 +31,7 @@ EntityManagerInterface $entityManager){
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('notice', 'Changement(s) effectué(s)!');
+            $this->addFlash('success', 'Changement(s) effectué(s)!');
             return $this->redirectToRoute('admin');
         }
 
@@ -57,6 +57,7 @@ EventDispatcherInterface $eventDispatcher){
         $eventDispatcher->dispatch(UserDeletedEvent::NAME, $event);
         $entityManager->remove($user);
         $entityManager->flush();
+        $this->addFlash('success', 'Utilisateur supprimé!');
         return $this->redirectToRoute('listUser');
     }
 }

@@ -18,6 +18,8 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+                success_handler: authentification.success_handler
+                failure_handler: authentification.failure_handler
                 username_parameter: "login[email]"
                 password_parameter: "login[password]"
             logout:

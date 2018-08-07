@@ -6,6 +6,7 @@ use App\Entity\Video;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Optional;
@@ -18,7 +19,7 @@ class AddVideoType extends AbstractType
         $builder
             ->add('title')
             ->add('url')
-            ->add('description')
+            ->add('description', TextareaType::class)
             ->add('user', HiddenType::class)
             ->add('submit', SubmitType::class)
         ;

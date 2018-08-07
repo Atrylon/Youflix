@@ -29,3 +29,20 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    authentification.success_handler:
+        class: App\Security\AuthentificationSuccessHandler
+        arguments:
+            - "@security.http_utils"
+            - []
+            - "@session.flash_bag"
+    authentification.failure_handler:
+        class: App\Security\AuthentificationFailedHandler
+        arguments:
+            - "@http_kernel"
+            - "@security.http_utils"
+            - []
+            - "@logger"
+            - "@session.flash_bag"
+
+

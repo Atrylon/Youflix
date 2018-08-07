@@ -22,8 +22,7 @@ class SecurityController extends Controller
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, LoggerInterface $logger,
-EventDispatcherInterface $eventDispatcher)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EventDispatcherInterface $eventDispatcher)
     {
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
@@ -35,7 +34,7 @@ EventDispatcherInterface $eventDispatcher)
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash( 'notice', 'You\'ve been registered succesfully! You can now login');
+            $this->addFlash( 'success', 'You\'ve been registered succesfully! You can now login');
             $event = new UserRegisteredEvent($user);
             $eventDispatcher->dispatch(UserRegisteredEvent::NAME, $event);
             return $this->redirectToRoute('home');
@@ -54,15 +53,9 @@ EventDispatcherInterface $eventDispatcher)
         $user = new User();
         $form = $this->createForm(LoginType::class, $user);
 
-//        if($form->isSubmitted() && $form->isValid()) {
-//            $this->addFlash( 'notice', 'You\'ve login succesfully!');
-//            return $this->redirectToRoute('home');
-//        }
-
         return $this->render('security/login.html.twig', [
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'form' => $form->createView(),
-            ''
         ]);
     }
 
@@ -78,21 +71,12 @@ EventDispatcherInterface $eventDispatcher)
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('notice', 'Changement(s) effectué(s)!');
+            $this->addFlash('success', 'Changement(s) effectué(s)!');
             return $this->redirectToRoute('profile');
         }
 
         return $this->render('security/profile.html.twig', [
             'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     */
-    public function logout(){
-
-        return $this->render('home/index.html.twig', [
         ]);
     }
 

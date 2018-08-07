@@ -8,9 +8,8 @@
 
 namespace App\Subscriber;
 
-
-use App\Event\UserDeletedEvent;
 use App\Event\UserRegisteredEvent;
+use App\Event\UserDeletedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
