@@ -19,6 +19,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends Controller
 {
+
+//    Créer un nouvel utilisateur en se basant sur les données du formulaire
+//    email et mdp obligatoire
     /**
      * @Route("/register", name="register")
      */
@@ -28,6 +31,7 @@ class SecurityController extends Controller
         $form = $this->createForm(RegisterUserType::class, $user);
         $form->handleRequest($request);
 
+//        verifie que le formulaire est valide puis crypte le mdp avant de l'ajouter dans le User
         if($form->isSubmitted() && $form->isValid()){
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
@@ -59,6 +63,7 @@ class SecurityController extends Controller
         ]);
     }
 
+//    Permet de modifier les données en récupérant le User connecté
     /**
      * @Route("/profile", name="profile")
      */
@@ -80,6 +85,7 @@ class SecurityController extends Controller
         ]);
     }
 
+//    Affiche une liste de tous les utilisateurs pour l'administrateur
     /**
      * @Route("/listUser", name="listUser")
      */

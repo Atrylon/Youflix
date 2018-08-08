@@ -17,6 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class VideoController extends Controller
 {
+
+    //    Ajoute une video (un Titre, une URL, une description) et la lie à l'utilisateur connecté
     /**
      * @Route("/addVideo", name="addVideo")
      */
@@ -42,6 +44,7 @@ class VideoController extends Controller
         ]);
     }
 
+    //    Récupère la liste des vidéos de l'utilisateur connecté
     /**
      * @Route("/myVideo", name="myVideo")
      */
@@ -61,6 +64,8 @@ class VideoController extends Controller
         ]);
     }
 
+    //    Permet d'éditer les informations de la vidéo dont l'Id est passé en paramètre.
+    //    Ne peut afficher que les vidéos appartenant à l'utilisateur connecté, sauf si Admin
     /**
      * @Route("/video/edit/{id}", name="editVideo")
      */
@@ -68,6 +73,13 @@ class VideoController extends Controller
                               VideoRepository $videoRepository, int $id){
 
         $video = $videoRepository->find($id);
+
+        //        Verifie que la video a été ajoutée par l'utilisateur courant et qu'il ne soit pas admin
+        if($video->getUser() != $this->getUser() and !in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            $this->addFlash('warning', 'Vidéo non trouvée!');
+            return $this->redirectToRoute('myVideo');
+        }
+
         $form = $this->createForm(EditVideoType::class, $video);
         $form->handleRequest($request);
 
@@ -84,12 +96,23 @@ class VideoController extends Controller
         ]);
     }
 
+    //    Permet de supprimer la vidéo dont l'id est passé en paramètre
+    //    Ne peut supprimer que les vidéos appartenant à l'utilisateur connecté, sauf si Admin
     /**
      * @Route("/video/remove/{id}", name="removeVideo")
      */
     public function removeVideo(Video $video, EntityManagerInterface $entityManager, LoggerInterface $logger,
 EventDispatcherInterface $eventDispatcher){
 
+        if($video->getUser() != $this->getUser() and !in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            $this->addFlash('warning', 'Vidéo non trouvée!');
+            return $this->redirectToRoute('myVideo');
+        }
+
+        if($video->getUser() != $this->getUser()){
+            $this->addFlash('warning', 'Vidéo non trouvée!');
+            return $this->redirectToRoute('myVideo');
+        }
         $event = new VideoDeletedEvent($video);
         $eventDispatcher->dispatch(VideoDeletedEvent::NAME, $event);
         $entityManager->remove($video);
@@ -98,6 +121,7 @@ EventDispatcherInterface $eventDispatcher){
         return $this->redirectToRoute('myVideo');
     }
 
+//    Récupère une liste de toutes les vidéos enregistrées. A destination de l'Admin
     /**
      * @Route("/listVideo", name="listVideo")
      */
@@ -115,6 +139,7 @@ EventDispatcherInterface $eventDispatcher){
         ]);
     }
 
+//    Permet de récupérer la liste des vidéos de l'utilisateur dont l'id est passé en paramètre. A destination de l'Admin
     /**
      * @Route("/listVideoByUser/{id}", name="listVideoByUser")
      */

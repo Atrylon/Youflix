@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends Controller
 {
 
+
+//    Affiche et permet la modifications des informations d'un utilisateur. A destination de l'Admin
     /**
      * @Route("/user/{id}", name="user_id", requirements={"id"="\d+"})
      */
