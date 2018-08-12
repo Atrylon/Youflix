@@ -16,6 +16,11 @@ new DB, update the database URL in the **.env file** and finally use : ``php bin
 
 You can now register, login and save your videos !
 
+###Commands
+
+Two commands are available is this project:
+* You can create an admin while using ``php bin/console app:create-admin EMAIL PASSWORD``
+* You can count the number of videos of a User by using : ``php bin/console app:user-count-videos EMAIL``
 
 ###Built With
 * [Symfony 4](https://symfony.com/4) - The Web framework used
