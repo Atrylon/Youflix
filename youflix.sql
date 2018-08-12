@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 08 août 2018 à 21:01
+-- Généré le :  Dim 12 août 2018 à 13:08
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `youflix`
 --
+CREATE DATABASE IF NOT EXISTS `youflix` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `youflix`;
 
 -- --------------------------------------------------------
 
