@@ -1,0 +1,16 @@
+language: php
+php:
+- '7.3'
+cache:
+  directories:
+  - "$HOME/.composer/cache"
+before_install: true
+install:
+- composer install
+script: true
+deploy:
+  api_key:
+    secure: L7S6WK1088FebTCA+OwB7ANCxZycSQtxU3ejzGDHzHu1Pivj7CHxL4dDmRbpb4z0qJF2dHv7++SXbHoHtQWrZdJ5Cx4W5l7fsXKngX7MmQd8EqP05NuAnRojxxvZpMsNrLROmQMpI3JxZAakqqpu/ZDccbR1CqgL4NY10cC0s+hfoMVZx1ev2sxYHIRSleGwZjv/YquU8yN7JCgirw50wwaVPCE0SbPAh57j9ZRIaGBFaf9CAebCNG7HBu66j50WIDWU5F8Y0Fe4dSar7DAR3tFu6hL8og9MKfTrwjoMY9pZRRjwGWM2x5/eUHV2jokMiYbNGOfvJqf2FTdunAdt2xZzhMBj6ZeYK7/YLl7UiokOOuL8vvFIofQUW38Q23ylNizCSVXX/TrPptRHw+PU/ZNEtZdNRxqmSm5CT3q+kXsB3IdeLNjC8obOz8ONdDTog9DwiKJtBowJOsNH5RlyioUynG2GzGxp3bflnqVsBQjIGsJCMu7ZKb5cgHcfVmbe6ZqjUFj0pvHPsyRDkwaLX1K+uiojv+GwDpwT/UzGPbNpnl/8Q9o4a2EsJDIRi0g3ruaedLI242OQwC9XNr5ttvbdPPj0Ml4noZ6hWP5djnJNNfu2Hq8vo7mlhI2zI21vqjJ5ctnSteJNnbX9lvnvVR3Z4yfXLiJNSDekB2AzfcQ=
+  app: ipssi-youflix
+    on:
+      repo: Atrylon/Youflix
